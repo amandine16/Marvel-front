@@ -8,7 +8,9 @@ const Comics = () => {
   useEffect(() => {
     const fetchComics = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/comics");
+        const response = await axios.get(
+          "https://marvel-backend-react.herokuapp.com/comics"
+        );
         setComics(response.data);
         setIsLoading(false);
       } catch (error) {

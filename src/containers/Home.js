@@ -26,7 +26,7 @@ const Home = () => {
     const fetchCharacters = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/characters/?skip=${skip}&limit=${limit}`
+          `https://marvel-backend-react.herokuapp.com/characters/?skip=${skip}&limit=${limit}`
         );
         setCharacters(response.data);
         setIsLoading(false);
