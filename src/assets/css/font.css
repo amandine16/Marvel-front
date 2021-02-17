@@ -1,0 +1,118 @@
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("../fonts/AvengeanceHeroicAvengerNormal.eot");
+  src: url("../fonts/AvengeanceHeroicAvengerNormal.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/AvengeanceHeroicAvengerNormal.woff2") format("woff2"),
+    url("../fonts/AvengeanceHeroicAvengerNormal.woff") format("woff"),
+    url("../fonts/AvengeanceHeroicAvengerNormal.ttf") format("truetype"),
+    url("../fonts/AvengeanceHeroicAvengerNormal.svg#AvengeanceHeroicAvengerNormal")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* 
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerBold.eot");
+  src: url("AvengeanceHeroicAvengerBold.eot?#iefix") format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerBold.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerBold.woff") format("woff"),
+    url("AvengeanceHeroicAvengerBold.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerBold.svg#AvengeanceHeroicAvengerBold")
+      format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerBold_1.eot");
+  src: url("AvengeanceHeroicAvengerBold_1.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerBold_1.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerBold_1.woff") format("woff"),
+    url("AvengeanceHeroicAvengerBold_1.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerBold_1.svg#AvengeanceHeroicAvengerBold")
+      format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerNormal_1.eot");
+  src: url("AvengeanceHeroicAvengerNormal_1.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerNormal_1.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerNormal_1.woff") format("woff"),
+    url("AvengeanceHeroicAvengerNormal_1.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerNormal_1.svg#AvengeanceHeroicAvengerNormal")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerItalic.eot");
+  src: url("AvengeanceHeroicAvengerItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerItalic.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerItalic.woff") format("woff"),
+    url("AvengeanceHeroicAvengerItalic.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerItalic.svg#AvengeanceHeroicAvengerItalic")
+      format("svg");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerBoldItalic.eot");
+  src: url("AvengeanceHeroicAvengerBoldItalic.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerBoldItalic.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerBoldItalic.woff") format("woff"),
+    url("AvengeanceHeroicAvengerBoldItalic.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerBoldItalic.svg#AvengeanceHeroicAvengerBoldItalic")
+      format("svg");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerItalic_1.eot");
+  src: url("AvengeanceHeroicAvengerItalic_1.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerItalic_1.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerItalic_1.woff") format("woff"),
+    url("AvengeanceHeroicAvengerItalic_1.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerItalic_1.svg#AvengeanceHeroicAvengerItalic")
+      format("svg");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avengeance Heroic Avenger";
+  src: url("AvengeanceHeroicAvengerBoldItalic_1.eot");
+  src: url("AvengeanceHeroicAvengerBoldItalic_1.eot?#iefix")
+      format("embedded-opentype"),
+    url("AvengeanceHeroicAvengerBoldItalic_1.woff2") format("woff2"),
+    url("AvengeanceHeroicAvengerBoldItalic_1.woff") format("woff"),
+    url("AvengeanceHeroicAvengerBoldItalic_1.ttf") format("truetype"),
+    url("AvengeanceHeroicAvengerBoldItalic_1.svg#AvengeanceHeroicAvengerBoldItalic")
+      format("svg");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+} */
