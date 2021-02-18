@@ -27,24 +27,45 @@ const Home = ({ error, setError }) => {
 
   // state favoris
   const [favorisCharacter, setFavorisCharacter] = useState([]);
-  // fonction au clic sur favoris d'un personnage
+  let newTabFavoris = [];
+  // COOKIES FOR FAVORIS CHARACTERS
+
   const handleFavorite = (id) => {
-    const newTabFavoris = [...favorisCharacter];
-    if (newTabFavoris.length === 0) {
-      // Si aucun personnage présent, je l'ajoute
+    // 1. Au premier clic, je récupère mon cookie
+    let newTabFavoris = Cookies.get("CookieFavorisCharacter");
+    console.log(newTabFavoris);
+    // 2. Je test si un cookie existe
+    if (typeof newTabFavoris == "undefined") {
+      console.log("premier tour = if cookie vide");
+      // 3. Si le cookie n'existe pas, je crée un tableau vide
+      newTabFavoris = [];
+      // 4. je push dans le tableau mon premier id
       newTabFavoris.push(id);
-      setFavorisCharacter(newTabFavoris);
+      //  5. J'ajoute ensuite ce tableau dans le cookie
+      Cookies.set("CookieFavorisCharacter", newTabFavoris);
+      // 6. Le premier tour est fini
     } else {
-      // si le perso est dejà présent je ne l'ajoute pas
+      console.log("autre tour que le premier");
+      // 7.Au prochain clic, le cookie récupéré n'est pas vide, je rentre donc dans cette condition
+      // 8. Je copie le cookie
+      const newCookie = Cookies.get("CookieFavorisCharacter");
+      // 9.J'enlève tous les guillemets
+      const newReplace = newCookie.replaceAll('"', "");
+      // 10. J'enlève les crochets de début et de fin
+      const newReplaceTwo = newReplace.replace("[", "");
+      const newReplaceThree = newReplaceTwo.replace("]", "");
+      // 11. Je transforme la string du cookie en tableau pour pusher les id
+      newTabFavoris = newReplaceThree.split(",");
+      // 12. Je test si l'id cliqué est deja présent dans mon cookie copié
       if (newTabFavoris.indexOf(id) === -1) {
+        console.log("lid n'est pas deja present, je l'ajoute");
+        // 13. Si l'id n'est pas dejà présent je l'ajoute
         newTabFavoris.push(id);
-        setFavorisCharacter(newTabFavoris);
+        // 14. Enfin, j'ajoute au cookie le nouvel id
+        Cookies.set("CookieFavorisCharacter", newTabFavoris);
       }
     }
   };
-  // COOKIES FOR FAVORIS CHARACTERS
-  // Je crée un cookie qui contient tous mes perso favoris ajouté (mon state)
-  Cookies.set("CookieFavorisCharacter", favorisCharacter, { expires: 1 });
 
   // REQUEST
   useEffect(() => {

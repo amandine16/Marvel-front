@@ -10,6 +10,7 @@ import Favoris from "./containers/Favoris";
 import ComicsRelated from "./containers/ComicsRelated";
 // Components
 import Header from "./components/Header";
+// Cookies
 
 function App() {
   // STATE FOR GENERAL PAGE
