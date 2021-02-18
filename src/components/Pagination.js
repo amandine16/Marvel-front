@@ -1,9 +1,11 @@
+import { useState } from "react";
+
 const Pagination = ({ setSkip, limit, count }) => {
   let nbPageTotal = Math.ceil(count / limit);
   let tabPage = [];
+  const [pageActuelle, setPageActuelle] = useState(1);
   for (let i = 1; i <= nbPageTotal; i++) {
     tabPage.push(i);
-    console.log(tabPage);
   }
   return (
     <div className="pagination">
@@ -13,12 +15,13 @@ const Pagination = ({ setSkip, limit, count }) => {
           return (
             <li
               key={i}
-              // style={{
-              //   color: i + 1 === filters.page && "white",
-              //   backgroundColor: i + 1 === filters.page && "#29ADB6",
-              // }}
+              style={{
+                color: i + 1 === pageActuelle && "white",
+                backgroundColor: i + 1 === pageActuelle && "#29ADB6",
+              }}
               onClick={() => {
                 let newSkip = i + 1;
+                setPageActuelle(newSkip);
                 setSkip(newSkip);
               }}
             >

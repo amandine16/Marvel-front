@@ -17,7 +17,6 @@ const ComicsRelated = () => {
         if (response) {
           setData(response.data);
           setIsLoading(false);
-          console.log(response);
         }
       } catch (error) {
         console.log(error.message);

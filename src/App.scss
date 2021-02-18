@@ -30,6 +30,34 @@ a {
   margin: 0 auto;
 }
 
+// PAGINATION
+.pagination {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  li {
+    cursor: pointer;
+  }
+}
+.infoComics,
+.infoCharacter {
+  position: relative;
+}
+.favoriteStar {
+  width: 25px;
+  height: 25px;
+
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  img {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
 // CONTAINERS
 .Header {
   height: 10vh;

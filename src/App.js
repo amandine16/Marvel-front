@@ -1,6 +1,7 @@
 // Essential
-import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState } from "react";
+import "./App.scss";
 import "./assets/css/font.css";
 // Containers
 import Home from "./containers/Home";
@@ -11,12 +12,14 @@ import ComicsRelated from "./containers/ComicsRelated";
 import Header from "./components/Header";
 
 function App() {
+  // STATE FOR GENERAL PAGE
+  const [error, setError] = useState("");
   return (
     <Router>
       <Header />
       <Switch>
         <Route path="/comics">
-          <Comics />
+          <Comics error={error} setError={setError} />
         </Route>
         <Route path="/comics-related">
           <ComicsRelated />
@@ -25,7 +28,7 @@ function App() {
           <Favoris />
         </Route>
         <Route path="/">
-          <Home />
+          <Home error={error} setError={setError} />
         </Route>
       </Switch>
     </Router>
