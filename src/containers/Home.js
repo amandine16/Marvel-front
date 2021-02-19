@@ -22,17 +22,16 @@ const Home = ({ error, setError }) => {
   const [count, setCount] = useState(0);
   let limit = 100;
 
-  // FAVORIS
-  // state etoile favoris qui passera a true ou false au clique et permettra par la suite de suppirmer l'id correpondant du cookie
-  // const [starFavorite, setStarFavoris] = useState(false);
-
   // COOKIES FOR FAVORIS CHARACTERS
-  // let newTabFavoris = [];
-
+  let favoris = false;
+  // --------------------- test passage couleur etoile favoris -------------
+  const [star, setStar] = useState(false);
   const handleFavorite = (character) => {
+    // --------------------- test passage couleur etoile favoris -------------
+    star ? setStar(false) : setStar(true);
     let newTabFavoris = [];
     let isExistDeja = false;
-    let indexASupp;
+
     // 1. Au premier clic,Je test si un cookie existe
     if (typeof Cookies.get("CookieFavorisCharacter") === "undefined") {
       // 2. je push dans le tableau mon premier perso
@@ -47,18 +46,15 @@ const Home = ({ error, setError }) => {
       // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
       for (let i = 0; i < newTabFavoris.length; i++) {
         if (newTabFavoris[i]._id === character._id) {
-          //8. Si je rentre dans cette condition, c'est donc que l'id est deja présent, alors je passe ma variable à true
+          //9 Si l'id est deja présent, alors je passe ma variable à true
           isExistDeja = true;
-          indexASupp = i;
+          //10. Cela veut dire que je veux supprimer ce perso de mon cookie
+          newTabFavoris.splice(i, 1);
+          //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+          Cookies.set("CookieFavorisCharacter", newTabFavoris);
         }
       }
-      //9 Si l'id est deja présent
-      if (isExistDeja === true) {
-        //10. Cela veut dire que je veux supprimer ce perso de mon cookie
-        newTabFavoris.splice(indexASupp, 1);
-        //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
-        Cookies.set("CookieFavorisCharacter", newTabFavoris);
-      }
+
       //12.Si l'id n'est pas deja présent
       if (isExistDeja === false) {
         //13. J'ajoute alors mon perso dans mon tableau
@@ -68,7 +64,6 @@ const Home = ({ error, setError }) => {
       }
     }
     console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
-    console.log(indexASupp);
   };
 
   // REQUEST
@@ -87,8 +82,9 @@ const Home = ({ error, setError }) => {
       }
     };
     fetchCharacters();
-  }, [skip, limit, search]);
+  }, [skip, limit, search, star]);
 
+  console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
   return !isLoading ? (
     <div className="Home container">
       {/* SEARCHBAR */}
@@ -100,6 +96,14 @@ const Home = ({ error, setError }) => {
       {error && <span>{error}</span>}
       {/* RESULTS */}
       {characters.map((elem, i) => {
+        favoris = false;
+        // Il faut chercher dans le cookie si l'id de mon perso actuel est présent
+        let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
+        for (let i = 0; i < cookie.length; i++) {
+          if (cookie[i]._id === elem._id) {
+            favoris = true;
+          }
+        }
         return (
           <div className="cardCharacter" id={elem._id} key={i}>
             <div className="imgCharacter">
@@ -119,13 +123,12 @@ const Home = ({ error, setError }) => {
                 <p className="missingDescription">Aucune description</p>
               )}
               {/* FAVORITE */}
+
               <div
-                // style={{
-                //   border:
-                //     starFavorite === true
-                //       ? "2px solid yellow"
-                //       : "2px solid red",
-                // }}
+                style={{
+                  border:
+                    favoris === true ? "2px solid green" : "2px solid red",
+                }}
                 className="favoriteStar"
                 onClick={() => handleFavorite(elem)}
               >

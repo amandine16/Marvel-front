@@ -1,9 +1,6 @@
-import { useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Favoris = () => {
-  const location = useLocation();
-  const { id } = location.state;
-  console.log(id);
   return <div className="Favoris">Favoris</div>;
 };
 
