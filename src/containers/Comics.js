@@ -12,6 +12,7 @@ const Comics = ({ error, setError }) => {
   const [skip, setSkip] = useState(0);
   let limit = 100;
   useEffect(() => {
+    console.log("comics");
     const fetchComics = async () => {
       try {
         const response = await axios.get(

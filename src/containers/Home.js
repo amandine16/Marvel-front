@@ -22,13 +22,12 @@ const Home = ({ error, setError }) => {
   const [count, setCount] = useState(0);
   let limit = 100;
 
-  const [starFavorite, setStarFavoris] = useState(false);
   // FAVORIS
+  // state etoile favoris
+  // const [starFavorite, setStarFavoris] = useState(false);
 
-  // state favoris
-  const [favorisCharacter, setFavorisCharacter] = useState([]);
-  let newTabFavoris = [];
   // COOKIES FOR FAVORIS CHARACTERS
+  // let newTabFavoris = [];
 
   const handleFavorite = (id) => {
     // 1. Au premier clic, je récupère mon cookie
@@ -69,6 +68,7 @@ const Home = ({ error, setError }) => {
 
   // REQUEST
   useEffect(() => {
+    console.log("home");
     const fetchCharacters = async () => {
       try {
         const response = await axios.get(
@@ -115,12 +115,12 @@ const Home = ({ error, setError }) => {
               )}
               {/* FAVORITE */}
               <div
-                style={{
-                  border:
-                    starFavorite === true
-                      ? "2px solid yellow"
-                      : "2px solid red",
-                }}
+                // style={{
+                //   border:
+                //     starFavorite === true
+                //       ? "2px solid yellow"
+                //       : "2px solid red",
+                // }}
                 className="favoriteStar"
                 onClick={() => handleFavorite(elem._id)}
               >
