@@ -66,8 +66,10 @@ const Home = ({ error, setError }) => {
         Cookies.set("CookieFavorisCharacter", newTabFavoris);
       }
     }
-    console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
   };
+  if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
+    console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
+  }
 
   // REQUEST
   useEffect(() => {

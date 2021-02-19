@@ -16,12 +16,12 @@ const Pagination = ({ setSkip, limit, count }) => {
             <li
               key={i}
               style={{
-                color: i + 1 === pageActuelle && "white",
-                backgroundColor: i + 1 === pageActuelle && "#29ADB6",
+                color: numeroDePage === pageActuelle && "white",
+                backgroundColor: numeroDePage === pageActuelle && "#29ADB6",
               }}
               onClick={() => {
-                let newSkip = i + 1;
-                setPageActuelle(newSkip);
+                let newSkip = numeroDePage * 100 - 100;
+                setPageActuelle(numeroDePage);
                 setSkip(newSkip);
               }}
             >
