@@ -25,10 +25,13 @@ const Home = ({ error, setError }) => {
   // COOKIES FOR FAVORIS CHARACTERS
   let favoris = false;
   // --------------------- test passage couleur etoile favoris -------------
-  const [star, setStar] = useState(false);
+  const [reloadRequestForFavoris, setReloadRequestForFavoris] = useState(false);
   const handleFavorite = (character) => {
-    // --------------------- test passage couleur etoile favoris -------------
-    star ? setStar(false) : setStar(true);
+    //  A chaque clic, je reload ma requete pour que je test si l'id de chaque perso mappé est présent dans mon cookie
+    reloadRequestForFavoris
+      ? setReloadRequestForFavoris(false)
+      : setReloadRequestForFavoris(true);
+
     let newTabFavoris = [];
     let isExistDeja = false;
 
@@ -82,9 +85,8 @@ const Home = ({ error, setError }) => {
       }
     };
     fetchCharacters();
-  }, [skip, limit, search, star]);
+  }, [skip, limit, search, reloadRequestForFavoris]);
 
-  console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
   return !isLoading ? (
     <div className="Home container">
       {/* SEARCHBAR */}
@@ -96,12 +98,18 @@ const Home = ({ error, setError }) => {
       {error && <span>{error}</span>}
       {/* RESULTS */}
       {characters.map((elem, i) => {
+        // Definition de la couleur de l'étoile favoris
+        // 1. A chaque map, je mets la variable qui va définir si l'id du perso est présent dans le cookie à false
         favoris = false;
-        // Il faut chercher dans le cookie si l'id de mon perso actuel est présent
-        let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
-        for (let i = 0; i < cookie.length; i++) {
-          if (cookie[i]._id === elem._id) {
-            favoris = true;
+        // 2. Ensuite, jecherche dans le cookie si l'id de mon perso actuel est présent
+        if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
+          let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
+          for (let i = 0; i < cookie.length; i++) {
+            // 3.Si l'id du perso actuellement mappé est présent dans le cookie, je passe la variable a true
+            if (cookie[i]._id === elem._id) {
+              // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
+              favoris = true;
+            }
           }
         }
         return (
@@ -123,7 +131,7 @@ const Home = ({ error, setError }) => {
                 <p className="missingDescription">Aucune description</p>
               )}
               {/* FAVORITE */}
-
+              {/* Je test ici la varibale favoris de mon perso mappé actuellement, ce qui va définir sa couleur */}
               <div
                 style={{
                   border:
