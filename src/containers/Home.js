@@ -23,7 +23,7 @@ const Home = ({ error, setError }) => {
   let limit = 100;
 
   // FAVORIS
-  // state etoile favoris
+  // state etoile favoris qui passera a true ou false au clique et permettra par la suite de suppirmer l'id correpondant du cookie
   // const [starFavorite, setStarFavoris] = useState(false);
 
   // COOKIES FOR FAVORIS CHARACTERS
