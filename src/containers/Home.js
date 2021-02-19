@@ -29,41 +29,36 @@ const Home = ({ error, setError }) => {
   // COOKIES FOR FAVORIS CHARACTERS
   // let newTabFavoris = [];
 
-  const handleFavorite = (id) => {
-    // 1. Au premier clic, je récupère mon cookie
-    let newTabFavoris = Cookies.get("CookieFavorisCharacter");
-    console.log(newTabFavoris);
-    // 2. Je test si un cookie existe
-    if (typeof newTabFavoris == "undefined") {
-      console.log("premier tour = if cookie vide");
-      // 3. Si le cookie n'existe pas, je crée un tableau vide
-      newTabFavoris = [];
-      // 4. je push dans le tableau mon premier id
-      newTabFavoris.push(id);
-      //  5. J'ajoute ensuite ce tableau dans le cookie
+  const handleFavorite = (character) => {
+    let newTabFavoris = [];
+    let isExistDeja = false;
+    // 1. Au premier clic,Je test si un cookie existe
+    if (typeof Cookies.get("CookieFavorisCharacter") === "undefined") {
+      // 2. je push dans le tableau mon premier perso
+      newTabFavoris.push(character);
+      //  3. J'ajoute ensuite ce tableau dans le cookie
       Cookies.set("CookieFavorisCharacter", newTabFavoris);
-      // 6. Le premier tour est fini
+      // 4. Le premier tour est fini
     } else {
-      console.log("autre tour que le premier");
-      // 7.Au prochain clic, le cookie récupéré n'est pas vide, je rentre donc dans cette condition
-      // 8. Je copie le cookie
-      const newCookie = Cookies.get("CookieFavorisCharacter");
-      // 9.J'enlève tous les guillemets
-      const newReplace = newCookie.replaceAll('"', "");
-      // 10. J'enlève les crochets de début et de fin
-      const newReplaceTwo = newReplace.replace("[", "");
-      const newReplaceThree = newReplaceTwo.replace("]", "");
-      // 11. Je transforme la string du cookie en tableau pour pusher les id
-      newTabFavoris = newReplaceThree.split(",");
-      // 12. Je test si l'id cliqué est deja présent dans mon cookie copié
-      if (newTabFavoris.indexOf(id) === -1) {
-        console.log("lid n'est pas deja present, je l'ajoute");
-        // 13. Si l'id n'est pas dejà présent je l'ajoute
-        newTabFavoris.push(id);
-        // 14. Enfin, j'ajoute au cookie le nouvel id
+      // 5.Si le cookie n'est pas vide
+      // 6. Je copie le cookie + le parse pour le traiter en tant que le tableau
+      newTabFavoris = JSON.parse(Cookies.get("CookieFavorisCharacter"));
+      // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
+      for (let i = 0; i < newTabFavoris.length; i++) {
+        if (newTabFavoris[i]._id === character._id) {
+          //8. Si je rentre dans cette condition, c'est donc que l'id est deja présent, alors je passe ma variable à true
+          isExistDeja = true;
+        }
+      }
+      //9.Si l'id n'est pas deja présent
+      if (isExistDeja === false) {
+        //10. J'ajoute alors mon perso dans mon tableau
+        newTabFavoris.push(character);
+        //11. Puis dans mon cookie
         Cookies.set("CookieFavorisCharacter", newTabFavoris);
       }
     }
+    console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
   };
 
   // REQUEST
@@ -122,7 +117,7 @@ const Home = ({ error, setError }) => {
                 //       : "2px solid red",
                 // }}
                 className="favoriteStar"
-                onClick={() => handleFavorite(elem._id)}
+                onClick={() => handleFavorite(elem)}
               >
                 <img src={starFavoris} alt="" />
               </div>
