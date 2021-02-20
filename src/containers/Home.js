@@ -68,6 +68,7 @@ const Home = ({ error, setError }) => {
     }
   };
   if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
+    console.log("cookie perso - P- Perso");
     console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
   }
 
@@ -111,7 +112,7 @@ const Home = ({ error, setError }) => {
             if (cookie[y]._id === elem._id) {
               // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
               favoris = true;
-              console.log(favoris);
+              // console.log(favoris);
             }
           }
         }

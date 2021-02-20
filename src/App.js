@@ -15,6 +15,8 @@ import Header from "./components/Header";
 function App() {
   // STATE FOR GENERAL PAGE
   const [error, setError] = useState("");
+  const [errorComics, setErrorComics] = useState("");
+  const [errorCharacter, setErrorCharacter] = useState("");
   return (
     <Router>
       <Header />
@@ -26,7 +28,12 @@ function App() {
           <ComicsRelated />
         </Route>
         <Route path="/favoris">
-          <Favoris error={error} setError={setError} />
+          <Favoris
+            errorComics={errorComics}
+            setErrorComics={setErrorComics}
+            errorCharacter={errorCharacter}
+            setErrorCharacter={setErrorCharacter}
+          />
         </Route>
         <Route path="/">
           <Home error={error} setError={setError} />
@@ -35,5 +42,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
