@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
 import starFavoris from "../assets/img/starFavorite.jpg";
@@ -10,12 +9,6 @@ const Comics = ({ error, setError }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [comics, setComics] = useState("");
   const [search, setSearch] = useState("");
-  const history = useHistory();
-
-  // //   FUNCTION FOR INFO COMICS
-  // const handleClickForComicsRelated = (id) => {
-  //   history.push("/comics-related", { id: id });
-  // };
 
   // PAGINATION
   const [skip, setSkip] = useState(0);
