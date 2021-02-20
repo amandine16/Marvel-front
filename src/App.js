@@ -26,7 +26,7 @@ function App() {
           <ComicsRelated />
         </Route>
         <Route path="/favoris">
-          <Favoris />
+          <Favoris error={error} setError={setError} />
         </Route>
         <Route path="/">
           <Home error={error} setError={setError} />

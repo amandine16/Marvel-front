@@ -24,7 +24,7 @@ const Home = ({ error, setError }) => {
 
   // COOKIES FOR FAVORIS CHARACTERS
   let favoris = false;
-  // --------------------- test passage couleur etoile favoris -------------
+  // STATE QUI PERMET DE RELANCER LA REQUETE A CHAQUE FOIS QUE LE CONTENU DU COOKIE CHANGE
   const [reloadRequestForFavoris, setReloadRequestForFavoris] = useState(false);
   const handleFavorite = (character) => {
     //  A chaque clic, je reload ma requete pour que je test si l'id de chaque perso mappé est présent dans mon cookie
@@ -35,7 +35,7 @@ const Home = ({ error, setError }) => {
     let newTabFavoris = [];
     let isExistDeja = false;
 
-    // 1. Au premier clic,Je test si un cookie existe
+    // 1. Au premier clic, Je test si un cookie existe
     if (typeof Cookies.get("CookieFavorisCharacter") === "undefined") {
       // 2. je push dans le tableau mon premier perso
       newTabFavoris.push(character);
@@ -106,11 +106,12 @@ const Home = ({ error, setError }) => {
         // 2. Ensuite, jecherche dans le cookie si l'id de mon perso actuel est présent
         if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
           let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
-          for (let i = 0; i < cookie.length; i++) {
+          for (let y = 0; y < cookie.length; y++) {
             // 3.Si l'id du perso actuellement mappé est présent dans le cookie, je passe la variable a true
-            if (cookie[i]._id === elem._id) {
+            if (cookie[y]._id === elem._id) {
               // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
               favoris = true;
+              console.log(favoris);
             }
           }
         }
