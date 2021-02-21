@@ -17,15 +17,10 @@ const Favoris = ({
   let newTabFavoris;
   let newTabFavorisComics;
   // Je crée un state pour relancer ma page à chaque changement du cookie
-  const [cookieCharacterFavoris, setCookieCharacterFavoris] = useState(
-    JSON.parse(Cookies.get("CookieFavorisCharacter")) || null
-  );
-  const [cookieComicsFavoris, setCookieComicsFavoris] = useState(
-    JSON.parse(Cookies.get("CookieFavorisComics")) || null
-  );
+  const [reloadFavoris, setReloadFavoris] = useState(false);
 
-  if (cookieCharacterFavoris !== null) {
-    // Si le cookie est rempli, je le copie
+  if (Cookies.get("CookieFavorisCharacter")) {
+    // Si le cookie existe, je le copie
     newTabFavoris = JSON.parse(Cookies.get("CookieFavorisCharacter"));
   } else {
     newTabFavoris = [];
@@ -33,8 +28,8 @@ const Favoris = ({
   console.log("cookie perso - P-favoris");
   console.log(newTabFavoris);
 
-  if (cookieComicsFavoris !== null) {
-    // Si le cookie est rempli, je le copie
+  if (Cookies.get("CookieFavorisComics")) {
+    // Si le cookie existe, je le copie
     newTabFavorisComics = JSON.parse(Cookies.get("CookieFavorisComics"));
   } else {
     newTabFavorisComics = [];
@@ -50,13 +45,11 @@ const Favoris = ({
   const handleFavoriteCharacter = (character) => {
     let isExistDeja = false;
     // 1. Au premier clic,Je test si un cookie existe
-    if (newTabFavoris === []) {
+    if (newTabFavoris.length === 0) {
       // 2. je push dans le tableau mon premier perso
       newTabFavoris.push(character);
       //  3. J'ajoute ensuite ce tableau dans le cookie
       Cookies.set("CookieFavorisCharacter", newTabFavoris);
-      // je mets à jour mon state
-      setCookieCharacterFavoris(newTabFavoris);
       // 4. Le premier tour est fini
     } else {
       // 5.Si le cookie n'est pas vide
@@ -69,7 +62,6 @@ const Favoris = ({
           newTabFavoris.splice(i, 1);
           //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
           Cookies.set("CookieFavorisCharacter", newTabFavoris);
-          setCookieCharacterFavoris(newTabFavoris);
         }
       }
 
@@ -79,22 +71,20 @@ const Favoris = ({
         newTabFavoris.push(character);
         //14. Puis dans mon cookie
         Cookies.set("CookieFavorisCharacter", newTabFavoris);
-        setCookieCharacterFavoris(newTabFavoris);
+        // setCookieCharacterFavoris(newTabFavoris);
       }
     }
+    reloadFavoris ? setReloadFavoris(false) : setReloadFavoris(true);
   };
 
   const handleFavoriteComics = (comics) => {
     let isExistDeja = false;
     // 1. Au premier clic,Je test si un cookie existe
-    if (newTabFavorisComics === []) {
+    if (newTabFavorisComics.length === 0) {
       // 2. je push dans le tableau mon premier perso
       newTabFavorisComics.push(comics);
       //  3. J'ajoute ensuite ce tableau dans le cookie
       Cookies.set("CookieFavoriscomics", newTabFavorisComics);
-      // je mets à jour mon state
-      setCookieComicsFavoris(newTabFavorisComics);
-      // 4. Le premier tour est fini
     } else {
       // 5.Si le cookie n'est pas vide
       // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
@@ -106,7 +96,7 @@ const Favoris = ({
           newTabFavorisComics.splice(i, 1);
           //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
           Cookies.set("CookieFavorisComics", newTabFavorisComics);
-          setCookieComicsFavoris(newTabFavorisComics);
+          // setCookieComicsFavoris(newTabFavorisComics);
         }
       }
 
@@ -116,16 +106,18 @@ const Favoris = ({
         newTabFavorisComics.push(comics);
         //14. Puis dans mon cookie
         Cookies.set("CookieFavoriscomics", newTabFavorisComics);
-        setCookieComicsFavoris(newTabFavorisComics);
       }
     }
+    // Je mets à jour le state à chaque click, pour relancer mon composant
+    reloadFavoris ? setReloadFavoris(false) : setReloadFavoris(true);
   };
 
   return (
     <>
       <div className="Favoris">
         {/* Si pas de perso favoris dans le cookie */}
-        {cookieCharacterFavoris.length === 0 ? (
+        {!Cookies.get("CookieFavorisCharacter") ||
+        Cookies.get("CookieFavorisCharacter") === "[]" ? (
           <>
             {setErrorCharacter("Aucun résultat perso")}
             <span>{errorCharacter}</span>
@@ -194,7 +186,8 @@ const Favoris = ({
         )}
         {/* COMIC FAVORIS */}
         {/* Si pas de perso favoris dans le cookie */}
-        {cookieComicsFavoris.length === 0 ? (
+        {!Cookies.get("CookieFavorisComics") ||
+        Cookies.get("CookieFavorisComics") === "[]" ? (
           <>
             {setErrorComics("Aucun résultat comics")}
             <span>{errorComics}</span>
