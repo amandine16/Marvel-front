@@ -42,73 +42,69 @@ const Favoris = ({
     history.push("/comics-related", { id: id });
   };
 
-  const handleFavoriteCharacter = (character) => {
+  const handleFavorite = (elem, from) => {
     let isExistDeja = false;
-    // 1. Au premier clic,Je test si un cookie existe
-    if (newTabFavoris.length === 0) {
-      // 2. je push dans le tableau mon premier perso
-      newTabFavoris.push(character);
-      //  3. J'ajoute ensuite ce tableau dans le cookie
-      Cookies.set("CookieFavorisCharacter", newTabFavoris);
-      // 4. Le premier tour est fini
-    } else {
-      // 5.Si le cookie n'est pas vide
-      // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
-      for (let i = 0; i < newTabFavoris.length; i++) {
-        if (newTabFavoris[i]._id === character._id) {
-          //9 Si l'id est deja présent, alors je passe ma variable à true
-          isExistDeja = true;
-          //10. Cela veut dire que je veux supprimer ce perso de mon cookie
-          newTabFavoris.splice(i, 1);
-          //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
-          Cookies.set("CookieFavorisCharacter", newTabFavoris);
-        }
-      }
-
-      //12.Si l'id n'est pas deja présent
-      if (isExistDeja === false) {
-        //13. J'ajoute alors mon perso dans mon tableau
-        newTabFavoris.push(character);
-        //14. Puis dans mon cookie
+    if (from === "character") {
+      // 1. Au premier clic,Je test si un cookie existe
+      if (newTabFavoris.length === 0) {
+        // 2. je push dans le tableau mon premier perso
+        newTabFavoris.push(elem);
+        //  3. J'ajoute ensuite ce tableau dans le cookie
         Cookies.set("CookieFavorisCharacter", newTabFavoris);
-        // setCookieCharacterFavoris(newTabFavoris);
-      }
-    }
-    reloadFavoris ? setReloadFavoris(false) : setReloadFavoris(true);
-  };
+      } else {
+        // 5.Si le cookie n'est pas vide
+        // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
+        for (let i = 0; i < newTabFavoris.length; i++) {
+          if (newTabFavoris[i]._id === elem._id) {
+            //9 Si l'id est deja présent, alors je passe ma variable à true
+            isExistDeja = true;
+            //10. Cela veut dire que je veux supprimer ce perso de mon cookie
+            newTabFavoris.splice(i, 1);
 
-  const handleFavoriteComics = (comics) => {
-    let isExistDeja = false;
-    // 1. Au premier clic,Je test si un cookie existe
-    if (newTabFavorisComics.length === 0) {
-      // 2. je push dans le tableau mon premier perso
-      newTabFavorisComics.push(comics);
-      //  3. J'ajoute ensuite ce tableau dans le cookie
-      Cookies.set("CookieFavoriscomics", newTabFavorisComics);
-    } else {
-      // 5.Si le cookie n'est pas vide
-      // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
-      for (let i = 0; i < newTabFavorisComics.length; i++) {
-        if (newTabFavorisComics[i]._id === comics._id) {
-          //9 Si l'id est deja présent, alors je passe ma variable à true
-          isExistDeja = true;
-          //10. Cela veut dire que je veux supprimer ce perso de mon cookie
-          newTabFavorisComics.splice(i, 1);
-          //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
-          Cookies.set("CookieFavorisComics", newTabFavorisComics);
-          // setCookieComicsFavoris(newTabFavorisComics);
+            //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+            Cookies.set("CookieFavorisCharacter", newTabFavoris);
+          }
         }
-      }
-
-      //12.Si l'id n'est pas deja présent
+      } //12.Si l'id n'est pas deja présent
       if (isExistDeja === false) {
         //13. J'ajoute alors mon perso dans mon tableau
-        newTabFavorisComics.push(comics);
+        newTabFavoris.push(elem);
         //14. Puis dans mon cookie
-        Cookies.set("CookieFavoriscomics", newTabFavorisComics);
+
+        //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+        Cookies.set("CookieFavorisCharacter", newTabFavoris);
+      }
+    } else {
+      // 1. Au premier clic,Je test si un cookie existe
+      if (newTabFavorisComics.length === 0) {
+        // 2. je push dans le tableau mon premier perso
+        newTabFavorisComics.push(elem);
+        //  3. J'ajoute ensuite ce tableau dans le cookie
+        Cookies.set("CookieFavorisComics", newTabFavorisComics);
+      } else {
+        // 5.Si le cookie n'est pas vide
+        // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
+        for (let i = 0; i < newTabFavorisComics.length; i++) {
+          if (newTabFavorisComics[i]._id === elem._id) {
+            //9 Si l'id est deja présent, alors je passe ma variable à true
+            isExistDeja = true;
+            //10. Cela veut dire que je veux supprimer ce perso de mon cookie
+            newTabFavorisComics.splice(i, 1);
+
+            //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+            Cookies.set("CookieFavorisComics", newTabFavorisComics);
+          }
+        }
+      } //12.Si l'id n'est pas deja présent
+      if (isExistDeja === false) {
+        //13. J'ajoute alors mon perso dans mon tableau
+        newTabFavorisComics.push(elem);
+        //14. Puis dans mon cookie
+
+        //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+        Cookies.set("CookieFavorisComics", newTabFavorisComics);
       }
     }
-    // Je mets à jour le state à chaque click, pour relancer mon composant
     reloadFavoris ? setReloadFavoris(false) : setReloadFavoris(true);
   };
 
@@ -172,7 +168,7 @@ const Favoris = ({
                                 : "2px solid red",
                           }}
                           className="favoriteStar"
-                          onClick={() => handleFavoriteCharacter(elem)}
+                          onClick={() => handleFavorite(elem, "character")}
                         >
                           <img src={starFavoris} alt="" />
                         </div>
@@ -242,7 +238,7 @@ const Favoris = ({
                                 : "2px solid red",
                           }}
                           className="favoriteStar"
-                          onClick={() => handleFavoriteComics(elem)}
+                          onClick={() => handleFavorite(elem, "comics")}
                         >
                           <img src={starFavoris} alt="" />
                         </div>
