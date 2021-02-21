@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import starFavoris from "../assets/img/starFavoris.jpg";
 import starFavorisBlanc from "../assets/img/starFavorisBlanc.jpg";
 import { useState } from "react";
-import logoEmpty from "../assets/img/error.jpg";
 
 const Favoris = ({
   setErrorComics,
@@ -30,10 +29,6 @@ const Favoris = ({
   Cookies.get("CookieFavorisComics")
     ? (newTabFavorisComics = JSON.parse(Cookies.get("CookieFavorisComics")))
     : (newTabFavorisComics = []);
-  console.log("cookie perso - P-favoris");
-  console.log(newTabFavoris);
-  console.log("cookie comics - P-favoris");
-  console.log(newTabFavorisComics);
 
   //   FUNCTION FOR INFO COMICS
   const handleClickForComicsRelated = (id) => {
