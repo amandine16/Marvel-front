@@ -1,14 +1,19 @@
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
-import starFavoris from "../assets/img/starFavorite.jpg";
+import starFavoris from "../assets/img/starFavoris.jpg";
+import starFavorisBlanc from "../assets/img/starFavorisBlanc.jpg";
 import { useState } from "react";
+import logoEmpty from "../assets/img/error.jpg";
 
 const Favoris = ({
   setErrorComics,
   errorComics,
   errorCharacter,
   setErrorCharacter,
+  setUrl,
 }) => {
+  // Je récupère l'url de la page
+  setUrl(window.location.pathname);
   const history = useHistory();
   // Variable pour changer les favoris
   let favoris = false;
@@ -98,7 +103,7 @@ const Favoris = ({
         Cookies.get("CookieFavorisCharacter") === "[]" ? (
           <>
             {setErrorCharacter("Aucun résultat perso")}
-            <span>{errorCharacter}</span>
+            <span className="error">{errorCharacter}</span>
           </>
         ) : (
           <>
@@ -139,16 +144,14 @@ const Favoris = ({
                     )}
                     {/* FAVORITE */}
                     <div
-                      style={{
-                        border:
-                          favoris === true
-                            ? "2px solid green"
-                            : "2px solid red",
-                      }}
                       className="favoriteStar"
                       onClick={() => handleFavorite(elem, "character")}
                     >
-                      <img src={starFavoris} alt="" />
+                      {favoris ? (
+                        <img src={starFavoris} alt="" />
+                      ) : (
+                        <img src={starFavorisBlanc} alt="" />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -162,7 +165,7 @@ const Favoris = ({
         Cookies.get("CookieFavorisComics") === "[]" ? (
           <>
             {setErrorComics("Aucun résultat comics")}
-            <span>{errorComics}</span>
+            <span className="error">{errorComics}</span>
           </>
         ) : (
           <>
@@ -202,16 +205,14 @@ const Favoris = ({
                     )}
                     {/* FAVORITE */}
                     <div
-                      style={{
-                        border:
-                          favorisComics === true
-                            ? "2px solid green"
-                            : "2px solid red",
-                      }}
                       className="favoriteStar"
                       onClick={() => handleFavorite(elem, "comics")}
                     >
-                      <img src={starFavoris} alt="" />
+                      {favorisComics ? (
+                        <img src={starFavoris} alt="" />
+                      ) : (
+                        <img src={starFavorisBlanc} alt="" />
+                      )}
                     </div>
                   </div>
                 </div>

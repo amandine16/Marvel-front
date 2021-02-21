@@ -3,17 +3,21 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
-import starFavoris from "../assets/img/starFavorite.jpg";
+import starFavoris from "../assets/img/starFavoris.jpg";
+import starFavorisBlanc from "../assets/img/starFavorisBlanc.jpg";
 import Cookies from "js-cookie";
 import Hero from "../components/Hero";
+import loading from "../assets/img/loading.jpg";
 
-const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
+const Home = ({ error, setError, placeHolder, setPlaceHolder, setUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [characters, setCharacters] = useState("");
   const [search, setSearch] = useState("");
   const history = useHistory();
+  // Je change le placeholder de mon input de recherche
   setPlaceHolder("personnage");
-
+  // Je récupère l'url de la page
+  setUrl(window.location.pathname);
   //   FUNCTION FOR INFO COMICS
   const handleClickForComicsRelated = (id) => {
     history.push("/comics-related", { id: id });
@@ -69,14 +73,13 @@ const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
       }
     }
   };
-  if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
-    console.log("cookie perso - P- Perso");
-    console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
-  }
+  // if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
+  //   console.log("cookie perso - P- Perso");
+  //   console.log(JSON.parse(Cookies.get("CookieFavorisCharacter")));
+  // }
 
   // REQUEST
   useEffect(() => {
-    console.log("home");
     const fetchCharacters = async () => {
       try {
         const response = await axios.get(
@@ -134,7 +137,6 @@ const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
               if (cookie[y]._id === elem._id) {
                 // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
                 favoris = true;
-                // console.log(favoris);
               }
             }
           }
@@ -159,14 +161,14 @@ const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
                 {/* FAVORITE */}
                 {/* Je test ici la varibale favoris de mon perso mappé actuellement, ce qui va définir sa couleur */}
                 <div
-                  style={{
-                    border:
-                      favoris === true ? "2px solid green" : "2px solid red",
-                  }}
                   className="favoriteStar"
                   onClick={() => handleFavorite(elem)}
                 >
-                  <img src={starFavoris} alt="" />
+                  {favoris ? (
+                    <img src={starFavoris} alt="" />
+                  ) : (
+                    <img src={starFavorisBlanc} alt="" />
+                  )}
                 </div>
               </div>
             </div>
@@ -175,7 +177,10 @@ const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
       </div>
     </div>
   ) : (
-    <span>En attente</span>
+    <div className="container isLoading">
+      <img className="tourne" src={loading} alt="" />
+      <span>En attente</span>
+    </div>
   );
 };
 

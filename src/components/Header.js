@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logoMarvel from "../assets/img/logoMarvel.png";
-const Header = () => {
+const Header = ({ url }) => {
   return (
     <div className="Header container">
       <div className="logo">
@@ -10,13 +10,13 @@ const Header = () => {
       </div>
       <div className="nav">
         <ul>
-          <li>
+          <li className={url === "/" ? "navLinkActive" : ""}>
             <Link to="/">Personnages</Link>
           </li>
-          <li>
+          <li className={url === "/comics" ? "navLinkActive" : ""}>
             <Link to="/comics">Comics</Link>
           </li>
-          <li>
+          <li className={url === "/favoris" ? "navLinkActive" : ""}>
             <Link to="/favoris">Favoris</Link>
           </li>
         </ul>

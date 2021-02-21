@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Pagination = ({ skip, setSkip, limit, count }) => {
   let nbPageTotal = Math.ceil(count / limit);
@@ -8,7 +9,7 @@ const Pagination = ({ skip, setSkip, limit, count }) => {
     tabPage.push(i);
   }
   const [pageMin, setPageMin] = useState(0);
-  const [pageMax, setPageMax] = useState(8);
+  let pageMax = 8;
 
   const handlePrecedent = () => {
     setPageActuelle(pageActuelle - 1);
@@ -19,7 +20,6 @@ const Pagination = ({ skip, setSkip, limit, count }) => {
     setSkip(skip + 100);
     setPageActuelle(pageActuelle + 1);
     setPageMin(pageMin + 1);
-    console.log(tabPage.length);
     if (pageMin >= nbPageTotal - 8) {
       setPageMin(7);
     }
@@ -29,7 +29,7 @@ const Pagination = ({ skip, setSkip, limit, count }) => {
     <div className="pagination">
       {pageActuelle > 1 && (
         <div className="previous" onClick={handlePrecedent}>
-          -
+          <FontAwesomeIcon icon="angle-double-left" />
         </div>
       )}
 
@@ -57,7 +57,7 @@ const Pagination = ({ skip, setSkip, limit, count }) => {
 
       {pageActuelle !== nbPageTotal && (
         <div className="next" onClick={handleSuivant}>
-          +
+          <FontAwesomeIcon icon="angle-double-right" />
         </div>
       )}
     </div>

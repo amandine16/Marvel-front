@@ -14,7 +14,7 @@ const SearchBar = ({ search, setSearch, placeHolder, error }) => {
       {error && (
         <>
           <img src={logoError} className="tourne" alt="" />
-          <span>{error}</span>
+          <span className="error">{error}</span>
         </>
       )}
     </div>

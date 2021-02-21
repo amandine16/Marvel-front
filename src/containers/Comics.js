@@ -2,14 +2,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
-import starFavoris from "../assets/img/starFavorite.jpg";
+import starFavoris from "../assets/img/starFavoris.jpg";
+import starFavorisBlanc from "../assets/img/starFavorisBlanc.jpg";
 import Cookies from "js-cookie";
+import loading from "../assets/img/loading.jpg";
 
-const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
+const Comics = ({ error, setError, placeHolder, setPlaceHolder, setUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [comics, setComics] = useState("");
   const [search, setSearch] = useState("");
+  // Je change le placeholder du input de recherche
   setPlaceHolder("comics");
+  // Je récupère l'url de la page
+  setUrl(window.location.pathname);
+
   // PAGINATION
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(0);
@@ -20,7 +26,7 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
   // STATE QUI PERMET DE RELANCER LA REQUETE A CHAQUE FOIS QUE LE CONTENU DU COOKIE CHANGE
   const [reloadRequestForFavoris, setReloadRequestForFavoris] = useState(false);
   const handleFavorite = (comics) => {
-    //  A chaque clic, je reload ma requete pour que je test si l'id de chaque perso mappé est présent dans mon cookie
+    //  A chaque clic, je reload ma requete pour que je test si l'id de chaque comics mappé est présent dans mon cookie
     reloadRequestForFavoris
       ? setReloadRequestForFavoris(false)
       : setReloadRequestForFavoris(true);
@@ -30,7 +36,7 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
 
     // 1. Au premier clic, Je test si un cookie existe
     if (typeof Cookies.get("CookieFavorisComics") === "undefined") {
-      // 2. je push dans le tableau mon premier perso
+      // 2. je push dans le tableau mon premier comics
       newTabFavoris.push(comics);
       //  3. J'ajoute ensuite ce tableau dans le cookie
       Cookies.set("CookieFavorisComics", newTabFavoris);
@@ -39,31 +45,27 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
       // 5.Si le cookie n'est pas vide
       // 6. Je copie le cookie + le parse pour le traiter en tant que le tableau
       newTabFavoris = JSON.parse(Cookies.get("CookieFavorisComics"));
-      // 7.Je cherche dans mon tableau d'objet si le perso est deja présent
+      // 7.Je cherche dans mon tableau d'objet si le comics est deja présent
       for (let i = 0; i < newTabFavoris.length; i++) {
         if (newTabFavoris[i]._id === comics._id) {
           //9 Si l'id est deja présent, alors je passe ma variable à true
           isExistDeja = true;
-          //10. Cela veut dire que je veux supprimer ce perso de mon cookie
+          //10. Cela veut dire que je veux supprimer ce comics de mon cookie
           newTabFavoris.splice(i, 1);
-          //11. J'insere mon nouveau tableau avec le perso supprimé dans le cookie
+          //11. J'insere mon nouveau tableau avec le comics supprimé dans le cookie
           Cookies.set("CookieFavorisComics", newTabFavoris);
         }
       }
 
       //12.Si l'id n'est pas deja présent
       if (isExistDeja === false) {
-        //13. J'ajoute alors mon perso dans mon tableau
+        //13. J'ajoute alors mon comics dans mon tableau
         newTabFavoris.push(comics);
         //14. Puis dans mon cookie
         Cookies.set("CookieFavorisComics", newTabFavoris);
       }
     }
   };
-  if (typeof Cookies.get("CookieFavorisComics") !== "undefined") {
-    console.log("cookie comics - P-comics");
-    console.log(JSON.parse(Cookies.get("CookieFavorisComics")));
-  }
 
   // REQUEST
   useEffect(() => {
@@ -114,13 +116,13 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
         {/* RESULTS */}
         {comics.map((elem, i) => {
           // Definition de la couleur de l'étoile favoris
-          // 1. A chaque map, je mets la variable qui va définir si l'id du perso est présent dans le cookie à false
+          // 1. A chaque map, je mets la variable qui va définir si l'id du comics est présent dans le cookie à false
           favoris = false;
-          // 2. Ensuite, jecherche dans le cookie si l'id de mon perso actuel est présent
+          // 2. Ensuite, jecherche dans le cookie si l'id de mon comics actuel est présent
           if (typeof Cookies.get("CookieFavorisComics") !== "undefined") {
             let cookie = JSON.parse(Cookies.get("CookieFavorisComics"));
             for (let y = 0; y < cookie.length; y++) {
-              // 3.Si l'id du perso actuellement mappé est présent dans le cookie, je passe la variable a true
+              // 3.Si l'id du comics actuellement mappé est présent dans le cookie, je passe la variable a true
               if (cookie[y]._id === elem._id) {
                 // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
                 favoris = true;
@@ -146,16 +148,16 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
                   <p className="missingDescription">Aucune description</p>
                 )}
                 {/* FAVORITE */}
-                {/* Je test ici la varibale favoris de mon perso mappé actuellement, ce qui va définir sa couleur */}
+                {/* Je test ici la varibale favoris de mon comics mappé actuellement, ce qui va définir sa couleur */}
                 <div
-                  style={{
-                    border:
-                      favoris === true ? "2px solid green" : "2px solid red",
-                  }}
                   className="favoriteStar"
                   onClick={() => handleFavorite(elem)}
                 >
-                  <img src={starFavoris} alt="" />
+                  {favoris ? (
+                    <img src={starFavoris} alt="" />
+                  ) : (
+                    <img src={starFavorisBlanc} alt="" />
+                  )}
                 </div>
               </div>
             </div>
@@ -164,7 +166,10 @@ const Comics = ({ error, setError, placeHolder, setPlaceHolder }) => {
       </div>
     </div>
   ) : (
-    <span>En attente</span>
+    <div className="container isLoading">
+      <img className="tourne" src={loading} alt="" />
+      <span>En attente</span>
+    </div>
   );
 };
 

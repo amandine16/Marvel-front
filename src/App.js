@@ -10,17 +10,26 @@ import Favoris from "./containers/Favoris";
 import ComicsRelated from "./containers/ComicsRelated";
 // Components
 import Header from "./components/Header";
-// Cookies
+// FontAwesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faAngleDoubleLeft, faAngleDoubleRight);
 
 function App() {
   // STATE FOR GENERAL PAGE
   const [error, setError] = useState("");
   const [errorComics, setErrorComics] = useState("");
   const [errorCharacter, setErrorCharacter] = useState("");
+  // Pour changer le placeholder du input de recherche dans les pages
   const [placeHolder, setPlaceHolder] = useState("");
+  // Pour mettre en évidence dans le header, la page actuellement consulté
+  const [url, setUrl] = useState("");
   return (
     <Router>
-      <Header />
+      <Header url={url} />
       <Switch>
         <Route path="/comics">
           <Comics
@@ -28,6 +37,7 @@ function App() {
             setError={setError}
             placeHolder={placeHolder}
             setPlaceHolder={setPlaceHolder}
+            setUrl={setUrl}
           />
         </Route>
         <Route path="/comics-related">
@@ -39,6 +49,7 @@ function App() {
             setErrorComics={setErrorComics}
             errorCharacter={errorCharacter}
             setErrorCharacter={setErrorCharacter}
+            setUrl={setUrl}
           />
         </Route>
         <Route path="/">
@@ -47,6 +58,7 @@ function App() {
             setError={setError}
             placeHolder={placeHolder}
             setPlaceHolder={setPlaceHolder}
+            setUrl={setUrl}
           />
         </Route>
       </Switch>
