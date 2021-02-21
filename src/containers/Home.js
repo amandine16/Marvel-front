@@ -5,12 +5,14 @@ import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
 import starFavoris from "../assets/img/starFavorite.jpg";
 import Cookies from "js-cookie";
+import Hero from "../components/Hero";
 
-const Home = ({ error, setError }) => {
+const Home = ({ error, setError, placeHolder, setPlaceHolder }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [characters, setCharacters] = useState("");
   const [search, setSearch] = useState("");
   const history = useHistory();
+  setPlaceHolder("personnage");
 
   //   FUNCTION FOR INFO COMICS
   const handleClickForComicsRelated = (id) => {
@@ -91,65 +93,86 @@ const Home = ({ error, setError }) => {
   }, [skip, limit, search, reloadRequestForFavoris]);
 
   return !isLoading ? (
-    <div className="Home container">
-      {/* SEARCHBAR */}
-      <SearchBar setSearch={setSearch} search={search} />
-      {/* PAGINATION */}
-      <Pagination skip={skip} setSkip={setSkip} limit={limit} count={count} />
-      {/* MISSING RESULTS */}
-      {characters.length === 0 ? setError("Aucun résultat") : setError("")}
-      {error && <span>{error}</span>}
-      {/* RESULTS */}
-      {characters.map((elem, i) => {
-        // Definition de la couleur de l'étoile favoris
-        // 1. A chaque map, je mets la variable qui va définir si l'id du perso est présent dans le cookie à false
-        favoris = false;
-        // 2. Ensuite, jecherche dans le cookie si l'id de mon perso actuel est présent
-        if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
-          let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
-          for (let y = 0; y < cookie.length; y++) {
-            // 3.Si l'id du perso actuellement mappé est présent dans le cookie, je passe la variable a true
-            if (cookie[y]._id === elem._id) {
-              // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
-              favoris = true;
-              // console.log(favoris);
+    <div className="container">
+      <Hero />
+      <div className="top">
+        <div className="search-wrapper">
+          {/* missing results of search */}
+          {characters.length === 0 ? setError("Aucun résultat") : setError("")}
+
+          {/* SEARCHBAR */}
+          <SearchBar
+            setSearch={setSearch}
+            search={search}
+            placeHolder={placeHolder}
+            error={error}
+          />
+        </div>
+        {characters.length !== 0 && (
+          <div className="pagination-wrapper">
+            {/* PAGINATION */}
+            <Pagination
+              skip={skip}
+              setSkip={setSkip}
+              limit={limit}
+              count={count}
+            />
+          </div>
+        )}
+      </div>
+      <div className="Wrapper">
+        {/* RESULTS */}
+        {characters.map((elem, i) => {
+          // Definition de la couleur de l'étoile favoris
+          // 1. A chaque map, je mets la variable qui va définir si l'id du perso est présent dans le cookie à false
+          favoris = false;
+          // 2. Ensuite, jecherche dans le cookie si l'id de mon perso actuel est présent
+          if (typeof Cookies.get("CookieFavorisCharacter") !== "undefined") {
+            let cookie = JSON.parse(Cookies.get("CookieFavorisCharacter"));
+            for (let y = 0; y < cookie.length; y++) {
+              // 3.Si l'id du perso actuellement mappé est présent dans le cookie, je passe la variable a true
+              if (cookie[y]._id === elem._id) {
+                // 4.Si la variable passe à true, alors ma couleur d'étoile passe en valide
+                favoris = true;
+                // console.log(favoris);
+              }
             }
           }
-        }
-        return (
-          <div className="cardCharacter" id={elem._id} key={i}>
-            <div className="imgCharacter">
-              <img
-                src={`${elem.thumbnail.path}.${elem.thumbnail.extension}`}
-                alt={elem.name}
-                onClick={() => handleClickForComicsRelated(elem._id)}
-              />
-            </div>
-            <div className="infoCharacter">
-              <span>{elem.name}</span>
-              {elem.description ? (
-                <p className="description">
-                  {elem.description.slice(0, 50) + "..."}
-                </p>
-              ) : (
-                <p className="missingDescription">Aucune description</p>
-              )}
-              {/* FAVORITE */}
-              {/* Je test ici la varibale favoris de mon perso mappé actuellement, ce qui va définir sa couleur */}
-              <div
-                style={{
-                  border:
-                    favoris === true ? "2px solid green" : "2px solid red",
-                }}
-                className="favoriteStar"
-                onClick={() => handleFavorite(elem)}
-              >
-                <img src={starFavoris} alt="" />
+          return (
+            <div className="card" id={elem._id} key={i}>
+              <div className="imgCard">
+                <img
+                  src={`${elem.thumbnail.path}.${elem.thumbnail.extension}`}
+                  alt={elem.name}
+                  onClick={() => handleClickForComicsRelated(elem._id)}
+                />
+              </div>
+              <div className="infoCard">
+                <span>{elem.name}</span>
+                {elem.description ? (
+                  <p className="description">
+                    {elem.description.slice(0, 50) + "..."}
+                  </p>
+                ) : (
+                  <p className="missingDescription">Aucune description</p>
+                )}
+                {/* FAVORITE */}
+                {/* Je test ici la varibale favoris de mon perso mappé actuellement, ce qui va définir sa couleur */}
+                <div
+                  style={{
+                    border:
+                      favoris === true ? "2px solid green" : "2px solid red",
+                  }}
+                  className="favoriteStar"
+                  onClick={() => handleFavorite(elem)}
+                >
+                  <img src={starFavoris} alt="" />
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   ) : (
     <span>En attente</span>

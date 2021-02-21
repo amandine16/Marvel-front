@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-
+import logoMarvel from "../assets/img/logoMarvel.png";
 const Header = () => {
   return (
     <div className="Header container">
       <div className="logo">
         <Link to="/">
-          <span>MARVEL</span>
+          <img src={logoMarvel} alt="" />
         </Link>
       </div>
       <div className="nav">

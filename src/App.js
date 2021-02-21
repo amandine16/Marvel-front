@@ -17,12 +17,18 @@ function App() {
   const [error, setError] = useState("");
   const [errorComics, setErrorComics] = useState("");
   const [errorCharacter, setErrorCharacter] = useState("");
+  const [placeHolder, setPlaceHolder] = useState("");
   return (
     <Router>
       <Header />
       <Switch>
         <Route path="/comics">
-          <Comics error={error} setError={setError} />
+          <Comics
+            error={error}
+            setError={setError}
+            placeHolder={placeHolder}
+            setPlaceHolder={setPlaceHolder}
+          />
         </Route>
         <Route path="/comics-related">
           <ComicsRelated />
@@ -36,7 +42,12 @@ function App() {
           />
         </Route>
         <Route path="/">
-          <Home error={error} setError={setError} />
+          <Home
+            error={error}
+            setError={setError}
+            placeHolder={placeHolder}
+            setPlaceHolder={setPlaceHolder}
+          />
         </Route>
       </Switch>
     </Router>
