@@ -98,7 +98,7 @@ const Favoris = ({
         Cookies.get("CookieFavorisCharacter") === "[]" ? (
           <>
             {setErrorCharacter("Aucun résultat perso")}
-            <span className="error">{errorCharacter}</span>
+            <span className="error container">{errorCharacter}</span>
           </>
         ) : (
           <>
@@ -160,7 +160,7 @@ const Favoris = ({
         Cookies.get("CookieFavorisComics") === "[]" ? (
           <>
             {setErrorComics("Aucun résultat comics")}
-            <span className="error">{errorComics}</span>
+            <span className="error container">{errorComics}</span>
           </>
         ) : (
           <>

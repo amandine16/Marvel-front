@@ -27,6 +27,25 @@ const ComicsRelated = () => {
 
   return !isLoading ? (
     <div className="ComicsRelated container">
+      {/* CHARACTER */}
+      <section className="characterRelated">
+        <div className="imgCharacterRelated">
+          <img
+            src={`${data.thumbnail.path}.${data.thumbnail.extension}`}
+            alt=""
+          />
+        </div>
+        <div className="infoCharacterRelated">
+          <h2>{data.name}</h2>
+          {data.description ? (
+            <p className="description">
+              {data.description.slice(0, 50) + "..."}
+            </p>
+          ) : (
+            <p className="missingDescription">Aucune description</p>
+          )}
+        </div>
+      </section>
       {/* COMICS */}
       <section className="comicsRelatedSection">
         {data.comics.length !== 0 ? (
